@@ -1,0 +1,11 @@
+.git
+.github
+.agents
+.ref
+.refs
+.tmp-validation
+coverage
+dist
+node_modules
+*.tgz
+pnpm-debug.log*

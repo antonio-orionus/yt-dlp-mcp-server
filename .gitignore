@@ -1,0 +1,13 @@
+node_modules/
+dist/
+coverage/
+*.tgz
+pnpm-debug.log*
+.tmp-validation/
+.ref/
+.refs/
+.agents/
+.env
+.env.*
+!.env.example
+.DS_Store

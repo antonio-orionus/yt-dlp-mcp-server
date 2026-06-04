@@ -1,0 +1,92 @@
+{
+  "name": "yt-dlp-mcp-server",
+  "version": "0.1.0",
+  "description": "Production-grade MCP server that lets LLM agents inspect, plan, download, and postprocess media URLs with yt-dlp, including YouTube and youtu.be links. 28 typed tools, managed output roots, safe argv execution, full yt-dlp option catalog.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Antonio Orionus <OrionusAI@proton.me>",
+  "homepage": "https://github.com/antonio-orionus/yt-dlp-mcp-server#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonio-orionus/yt-dlp-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/antonio-orionus/yt-dlp-mcp-server/issues"
+  },
+  "packageManager": "pnpm@11.5.1",
+  "mcpName": "io.github.antonio-orionus/yt-dlp",
+  "bin": {
+    "yt-dlp-mcp-server": "dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "Dockerfile",
+    "README.md",
+    "server.json",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && node scripts/ensure-bin.js dist/index.js",
+    "audit:outputs": "tsx scripts/audit-outputs.ts",
+    "docker:build:validation": "tsx scripts/docker-build.ts",
+    "doctor": "node dist/index.js doctor",
+    "dev": "tsx src/index.ts",
+    "prepack": "pnpm run build",
+    "print-config": "node dist/index.js print-config",
+    "smoke:docker": "tsx scripts/docker-smoke.ts",
+    "smoke:real": "tsx scripts/smoke-real.ts",
+    "start": "node dist/index.js",
+    "test:mcp-contract": "tsx scripts/mcp-contract.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "typecheck:scripts": "tsc -p tsconfig.scripts.json",
+    "validate:ci": "pnpm run typecheck && pnpm run typecheck:scripts && pnpm run test && pnpm run build && pnpm run test:mcp-contract && pnpm run audit:outputs && pnpm pack --dry-run",
+    "validate:local": "tsx scripts/validate-local.ts",
+    "validate:release": "tsx scripts/validate-release.ts"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "agent",
+    "yt-dlp",
+    "youtube",
+    "video",
+    "audio",
+    "download",
+    "subtitle",
+    "transcript",
+    "playlist",
+    "postprocess",
+    "ffmpeg",
+    "sponsorblock"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "yt-dlp-bridge": "^0.1.0",
+    "zod": "^4.1.8"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "tsx": "^4.20.6",
+    "typescript": "^6.0.3",
+    "vitest": "^4.0.15"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

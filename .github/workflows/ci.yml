@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  mcp-cross-platform:
+    name: mcp ${{ matrix.os }} node-${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [20, 22, 24]
+    steps:
+      - name: Checkout MCP server
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.5.1 --activate
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate package
+        run: pnpm run validate:ci
+
+  release-gate:
+    name: release gate ubuntu node-24 docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout MCP server
+        uses: actions/checkout@v4
+        with:
+          path: yt-dlp-mcp-server
+
+      - name: Checkout bridge
+        uses: actions/checkout@v4
+        with:
+          repository: antonio-orionus/yt-dlp-bridge
+          path: y/yt-dlp-bridge
+
+      - name: Checkout ytdlp-errors
+        uses: actions/checkout@v4
+        with:
+          repository: antonio-orionus/yt-dlp-errors
+          path: y/ytdlp-errors
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Enable pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.5.1 --activate
+
+      - name: Install pinned yt-dlp for bridge drift check
+        run: python -m pip install "yt-dlp==2026.03.17"
+
+      - name: Bootstrap MCP validation runner
+        working-directory: yt-dlp-mcp-server
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate release gate
+        working-directory: yt-dlp-mcp-server
+        run: pnpm run validate:release
