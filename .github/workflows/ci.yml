@@ -7,7 +7,9 @@ on:
   workflow_dispatch:
 
 env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+  GIT_CONFIG_COUNT: "1"
+  GIT_CONFIG_KEY_0: init.defaultBranch
+  GIT_CONFIG_VALUE_0: main
 
 jobs:
   mcp-cross-platform:
@@ -16,19 +18,20 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-2025-vs2026]
         node: [20, 22, 24]
     steps:
       - name: Checkout MCP server
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ matrix.node }}
+          package-manager-cache: false
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.34.1
           run_install: false
@@ -44,34 +47,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout MCP server
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: yt-dlp-mcp-server
 
       - name: Checkout bridge
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: antonio-orionus/yt-dlp-bridge
           path: y/yt-dlp-bridge
 
       - name: Checkout ytdlp-errors
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: antonio-orionus/yt-dlp-errors
           path: y/ytdlp-errors
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
+          package-manager-cache: false
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
         with:
           version: 10.34.1
           run_install: false

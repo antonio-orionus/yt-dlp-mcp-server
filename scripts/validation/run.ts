@@ -13,11 +13,17 @@ export function command(name: string): string {
   return process.platform === "win32" ? `${name}.cmd` : name;
 }
 
+const noisyPackageManagerEnv = new Set([
+  "npm_config__jsr_registry",
+  "npm_config_npm_globalconfig",
+  "npm_config_verify_deps_before_run"
+]);
+
 export function run(commandName: string, args: string[], options: { cwd?: string; env?: Record<string, string> } = {}): void {
   console.log(`\n$ ${commandName} ${args.join(" ")}${options.cwd ? `  # cwd=${options.cwd}` : ""}`);
   const result = spawnSync(commandName, args, {
     cwd: options.cwd ?? repoRoot,
-    env: { ...process.env, ...options.env },
+    env: childEnv(options.env),
     stdio: "inherit",
     shell: false
   });
@@ -72,4 +78,12 @@ export function buildDockerImage(image: string): void {
     image,
     paths.repoRoot
   ]);
+}
+
+function childEnv(overrides: Record<string, string> = {}): NodeJS.ProcessEnv {
+  const env = { ...process.env };
+  for (const key of Object.keys(env)) {
+    if (noisyPackageManagerEnv.has(key.toLowerCase())) delete env[key];
+  }
+  return { ...env, ...overrides };
 }

@@ -22,7 +22,7 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends ca-certificates curl ffmpeg python3 python3-pip unzip \
   && rm -rf /var/lib/apt/lists/*
 
-RUN python3 -m pip install --break-system-packages --no-cache-dir "yt-dlp==${YTDLP_VERSION}"
+RUN python3 -m pip install --break-system-packages --root-user-action=ignore --no-cache-dir "yt-dlp==${YTDLP_VERSION}"
 RUN curl -fsSL https://deno.land/install.sh | sh
 RUN corepack enable && corepack prepare "pnpm@${PNPM_VERSION}" --activate
 
