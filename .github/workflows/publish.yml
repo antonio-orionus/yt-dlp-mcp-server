@@ -22,27 +22,28 @@ jobs:
       artifact-metadata: write
     steps:
       - name: Checkout MCP server
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: yt-dlp-mcp-server
 
       - name: Checkout bridge
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: antonio-orionus/yt-dlp-bridge
           path: y/yt-dlp-bridge
 
       - name: Checkout ytdlp-errors
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: antonio-orionus/yt-dlp-errors
           path: y/ytdlp-errors
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org
+          package-manager-cache: false
 
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -96,4 +97,4 @@ jobs:
 
       - name: Publish to npm
         working-directory: yt-dlp-mcp-server
-        run: npm publish .release/*.tgz --provenance --access public
+        run: npm publish .release/*.tgz --access public
