@@ -6,7 +6,7 @@ LABEL org.opencontainers.image.source="https://github.com/antonio-orionus/yt-dlp
 LABEL org.opencontainers.image.description="Dependency-aware local stdio MCP server for yt-dlp"
 LABEL io.modelcontextprotocol.server.name="io.github.antonio-orionus/yt-dlp"
 
-ARG PNPM_VERSION=11.5.1
+ARG PNPM_VERSION=10.34.1
 ARG YTDLP_VERSION=2026.03.17
 
 ENV DEBIAN_FRONTEND=noninteractive

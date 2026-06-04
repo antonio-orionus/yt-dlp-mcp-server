@@ -1,14 +1,14 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assert, repoRoot, scriptSummary } from "./validation/common.js";
-import { buildDockerImage, paths, run, runPnpm } from "./validation/run.js";
+import { buildDockerImage, installDependencies, packDryRun, paths, run, runPackageScript, runPnpm } from "./validation/run.js";
 
 const image = process.env.YTDLP_MCP_DOCKER_IMAGE ?? "yt-dlp-mcp-server:validation";
 
-runPnpm(["install", "--frozen-lockfile"], paths.errorsRoot);
-runPnpm(["run", "typecheck"], paths.errorsRoot);
-runPnpm(["run", "test"], paths.errorsRoot);
-runPnpm(["run", "build"], paths.errorsRoot);
+installDependencies(paths.errorsRoot);
+runPackageScript("typecheck", paths.errorsRoot);
+runPackageScript("test", paths.errorsRoot);
+runPackageScript("build", paths.errorsRoot);
 
 runPnpm(["install", "--frozen-lockfile"], paths.bridgeRoot);
 runPnpm(["run", "typecheck"], paths.bridgeRoot);
@@ -22,7 +22,7 @@ runPnpm(["run", "test"]);
 runPnpm(["run", "build"]);
 runPnpm(["run", "test:mcp-contract"]);
 
-runPnpm(["pack", "--dry-run"], paths.errorsRoot);
+packDryRun(paths.errorsRoot);
 runPnpm(["pack", "--dry-run"], paths.bridgeRoot);
 runPnpm(["pack", "--dry-run"], paths.repoRoot);
 

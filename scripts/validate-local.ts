@@ -1,11 +1,11 @@
 import { scriptSummary } from "./validation/common.js";
 import { spawnSync } from "node:child_process";
-import { paths, runPnpm } from "./validation/run.js";
+import { installDependencies, paths, runPackageScript, runPnpm } from "./validation/run.js";
 
-runPnpm(["install", "--frozen-lockfile"], paths.errorsRoot);
-runPnpm(["run", "typecheck"], paths.errorsRoot);
-runPnpm(["run", "test"], paths.errorsRoot);
-runPnpm(["run", "build"], paths.errorsRoot);
+installDependencies(paths.errorsRoot);
+runPackageScript("typecheck", paths.errorsRoot);
+runPackageScript("test", paths.errorsRoot);
+runPackageScript("build", paths.errorsRoot);
 
 runPnpm(["install", "--frozen-lockfile"], paths.bridgeRoot);
 if (canImportYtDlp()) {

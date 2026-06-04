@@ -24,10 +24,11 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Enable pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@11.5.1 --activate
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.1
+          run_install: false
 
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -66,10 +67,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Enable pnpm
-        run: |
-          corepack enable
-          corepack prepare pnpm@11.5.1 --activate
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.34.1
+          run_install: false
 
       - name: Install pinned yt-dlp for bridge drift check
         run: python -m pip install "yt-dlp==2026.03.17"

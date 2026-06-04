@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import path from "node:path";
 import { repoRoot } from "./common.js";
 
@@ -28,6 +29,38 @@ export function run(commandName: string, args: string[], options: { cwd?: string
 
 export function runPnpm(args: string[], cwd = repoRoot, env: Record<string, string> = {}): void {
   run(command("pnpm"), args, { cwd, env });
+}
+
+export function runNpm(args: string[], cwd = repoRoot, env: Record<string, string> = {}): void {
+  run(command("npm"), args, { cwd, env });
+}
+
+export function installDependencies(cwd = repoRoot): void {
+  if (existsSync(path.join(cwd, "pnpm-lock.yaml"))) {
+    runPnpm(["install", "--frozen-lockfile"], cwd);
+    return;
+  }
+  if (existsSync(path.join(cwd, "package-lock.json"))) {
+    runNpm(["ci"], cwd);
+    return;
+  }
+  runPnpm(["install", "--no-frozen-lockfile"], cwd);
+}
+
+export function runPackageScript(script: string, cwd = repoRoot): void {
+  if (existsSync(path.join(cwd, "pnpm-lock.yaml"))) {
+    runPnpm(["run", script], cwd);
+    return;
+  }
+  runNpm(["run", script], cwd);
+}
+
+export function packDryRun(cwd = repoRoot): void {
+  if (existsSync(path.join(cwd, "pnpm-lock.yaml"))) {
+    runPnpm(["pack", "--dry-run"], cwd);
+    return;
+  }
+  runNpm(["pack", "--dry-run"], cwd);
 }
 
 export function buildDockerImage(image: string): void {

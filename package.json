@@ -13,7 +13,7 @@
   "bugs": {
     "url": "https://github.com/antonio-orionus/yt-dlp-mcp-server/issues"
   },
-  "packageManager": "pnpm@11.5.1",
+  "packageManager": "pnpm@10.34.1",
   "mcpName": "io.github.antonio-orionus/yt-dlp",
   "bin": {
     "yt-dlp-mcp-server": "dist/index.js"
