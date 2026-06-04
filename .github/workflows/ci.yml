@@ -31,10 +31,9 @@ jobs:
           package-manager-cache: false
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 10.34.1
-          run_install: false
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.1 --activate
 
       - name: Install
         run: pnpm install --frozen-lockfile
@@ -75,10 +74,9 @@ jobs:
           python-version: "3.12"
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v6
-        with:
-          version: 10.34.1
-          run_install: false
+        run: |
+          corepack enable
+          corepack prepare pnpm@10.34.1 --activate
 
       - name: Install pinned yt-dlp for bridge drift check
         run: python -m pip install "yt-dlp==2026.03.17"
