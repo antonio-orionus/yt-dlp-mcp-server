@@ -11,7 +11,7 @@
 
 28 typed tools. YouTube/youtu.be aware. Plan before write. Safe execution. Full yt-dlp option truth.
 
-> **MCP server pre-release:** v0.1.0 is ready for early users, but pin versions in production while the public release process stabilizes.
+> **MCP server pre-release:** v0.1.1 is ready for early users, but pin versions in production while the public release process stabilizes.
 
 [Quick Start](#quick-start) • [Tools](#tools) • [Usage Examples](#usage-examples) • [Safety Model](#safety-model) • [Docker](#docker)
 

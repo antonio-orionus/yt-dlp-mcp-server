@@ -54,7 +54,7 @@ describe("CLI install helpers", () => {
       mode: "docker",
       targetOs: "macos",
       outputRoot: "/Users/alex/Downloads/yt-dlp-mcp",
-      image: "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.0",
+      image: "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.1",
       packageSpec: "yt-dlp-mcp-server@latest",
       serverPath: "/repo/dist/index.js"
     });
@@ -64,7 +64,7 @@ describe("CLI install helpers", () => {
     };
     expect(parsed.mcpServers["yt-dlp"].command).toBe("docker");
     expect(parsed.mcpServers["yt-dlp"].args).toContain("/Users/alex/Downloads/yt-dlp-mcp:/downloads");
-    expect(parsed.mcpServers["yt-dlp"].args).toContain("ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.0");
+    expect(parsed.mcpServers["yt-dlp"].args).toContain("ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.1");
   });
 
   it("renders Windows npx config with .cmd command resolution", () => {

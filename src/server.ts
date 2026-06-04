@@ -9,7 +9,7 @@ import { registerInspectTools } from "./tools/inspect.js";
 import { registerPlanTools } from "./tools/plan.js";
 import { registerPostprocessTools } from "./tools/postprocess.js";
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 
 export function createServer(): McpServer {
   const server = new McpServer(

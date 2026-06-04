@@ -43,7 +43,7 @@ type ParsedArgs = {
   flags: Map<string, string | true>;
 };
 
-const DOCKER_IMAGE = "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.0";
+const DOCKER_IMAGE = "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.1";
 const PACKAGE_SPEC = "yt-dlp-mcp-server@latest";
 
 export async function runCli(argv = process.argv.slice(2), io: CliIo = defaultIo()): Promise<number> {
