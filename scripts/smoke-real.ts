@@ -118,7 +118,9 @@ await withMcpClient({ outputRoot, name: "yt-dlp-mcp-real-smoke" }, async (client
   await callOk(client, "ytdlp_probe_url", { url, limit: 1 });
 
   const plan = await callOk(client, "ytdlp_plan_download", mediaArgs("planned.%(ext)s"));
-  assert(Array.isArray(plan.requiredDependencies), "plan missing requiredDependencies");
+  assert(isRecord(plan.facts), "plan missing facts");
+  assert(isRecord(plan.facts.dependencies), "plan missing dependency facts");
+  assert(Array.isArray(plan.facts.dependencies.required), "plan missing required dependency facts");
 
   for (const smokeCase of cases) {
     const data = await callOk(client, smokeCase.tool, smokeCase.args);

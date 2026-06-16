@@ -1,5 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CONFIG, EmptyInputSchema, checkEnvironment } from "yt-dlp-bridge";
+import { CONFIG } from "yt-dlp-bridge/config";
+import { checkEnvironment } from "yt-dlp-bridge/environment";
+import { EmptyInputSchema } from "yt-dlp-bridge/schemas";
 import { EnvironmentOutputSchema, ReadOnlyCommandOutputSchema } from "../output-schemas.js";
 import { runReadOnly } from "../runtime.js";
 import { ok, registerTool } from "../tooling.js";

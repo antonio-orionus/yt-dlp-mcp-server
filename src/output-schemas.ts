@@ -40,30 +40,22 @@ const PaginationSchema = <T extends z.ZodType>(item: T) =>
     items: z.array(item)
   });
 
-const CommandPreviewSchema = z.object({
-  command: z.string(),
-  args: z.array(z.string()),
-  redactedArgs: z.array(z.string())
-}).passthrough();
-
 const PlanSchema = z.object({
-  intent: z.string(),
-  url: z.string(),
-  argv: z.array(z.string()),
-  redactedArgv: z.array(z.string()),
-  outputRoot: z.string(),
-  outputTemplate: z.string(),
-  tempRoot: z.string(),
-  selectedFormat: z.string().optional(),
-  formatSort: z.array(z.string()),
-  requiredDependencies: z.array(DependencySchema),
-  optionalDependencies: z.array(DependencySchema),
-  risks: z.array(z.string()),
-  sideEffects: z.array(z.string()),
-  commandPreview: CommandPreviewSchema,
-  overwrite: z.boolean(),
-  cookies: z.object({ enabled: z.boolean(), source: z.string().optional(), value: z.string().optional() }).passthrough(),
-  expertMode: z.boolean()
+  kind: z.string(),
+  args: z.array(z.string()),
+  redactedArgs: z.array(z.string()),
+  facts: z.object({
+    isMediaDownload: z.boolean(),
+    output: UnknownRecord.optional(),
+    playlistScope: UnknownRecord.optional(),
+    effectiveSubtitleFormat: z.string().optional(),
+    dependencies: z.object({
+      required: z.array(DependencySchema),
+      optional: z.array(DependencySchema)
+    }).passthrough(),
+    risks: z.array(z.string()),
+    sideEffects: z.array(z.string())
+  }).passthrough()
 }).passthrough();
 
 const ProgressEventSchema = z.object({
@@ -247,20 +239,7 @@ export const SearchOutputSchema = toolOutput(
 
 export const PlanDownloadOutputSchema = toolOutput(PlanSchema);
 
-export const PlanPostprocessOutputSchema = toolOutput(
-  z.object({
-    intent: z.string(),
-    url: z.string().optional(),
-    inputFile: z.string().optional(),
-    outputRoot: z.string(),
-    outputTemplate: z.string(),
-    tempRoot: z.string(),
-    requiredDependencies: z.array(DependencySchema),
-    risks: z.array(z.string()),
-    sideEffects: z.array(z.string()),
-    cookies: z.object({ enabled: z.boolean(), source: z.string().optional(), value: z.string().optional() }).passthrough()
-  }).passthrough()
-);
+export const PlanPostprocessOutputSchema = toolOutput(PlanSchema);
 
 export const ValidateOptionsOutputSchema = toolOutput(
   z.object({

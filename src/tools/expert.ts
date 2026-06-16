@@ -1,8 +1,12 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CONFIG, ExpertInputSchema, redactArgs } from "yt-dlp-bridge";
+import { CONFIG } from "yt-dlp-bridge/config";
+import { redactArgs } from "yt-dlp-bridge/redaction";
+import { WorkflowExpertInputSchema } from "yt-dlp-bridge/schemas";
 import { ExpertOutputSchema } from "../output-schemas.js";
 import { runYtdlp, validateExpertArgs } from "../runtime.js";
 import { ok, registerTool } from "../tooling.js";
+
+const ExpertInputSchema = WorkflowExpertInputSchema.omit({ kind: true });
 
 export function registerExpertTools(server: McpServer): void {
   registerTool(

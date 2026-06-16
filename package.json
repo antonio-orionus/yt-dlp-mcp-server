@@ -1,6 +1,6 @@
 {
   "name": "yt-dlp-mcp-server",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Production-grade MCP server that lets LLM agents inspect, plan, download, and postprocess media URLs with yt-dlp, including YouTube and youtu.be links. 28 typed tools, managed output roots, safe argv execution, full yt-dlp option catalog.",
   "type": "module",
   "license": "MIT",
@@ -74,7 +74,7 @@
   ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "yt-dlp-bridge": "^0.1.0",
+    "yt-dlp-bridge": "^0.2.0",
     "zod": "^4.1.8"
   },
   "devDependencies": {
@@ -84,7 +84,7 @@
     "vitest": "^4.0.15"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22.13"
   },
   "publishConfig": {
     "access": "public"

@@ -1,7 +1,9 @@
 import os from "node:os";
 import path from "node:path";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { CONFIG, checkEnvironment, type DetectedDependency, type EnvironmentReport } from "yt-dlp-bridge";
+import { CONFIG } from "yt-dlp-bridge/config";
+import { checkEnvironment, type EnvironmentReport } from "yt-dlp-bridge/environment";
+import type { DetectedDependency } from "yt-dlp-bridge";
 import { createServer, VERSION } from "./server.js";
 
 type CliIo = {
@@ -43,7 +45,7 @@ type ParsedArgs = {
   flags: Map<string, string | true>;
 };
 
-const DOCKER_IMAGE = "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.1";
+const DOCKER_IMAGE = "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.2.0";
 const PACKAGE_SPEC = "yt-dlp-mcp-server@latest";
 
 export async function runCli(argv = process.argv.slice(2), io: CliIo = defaultIo()): Promise<number> {
@@ -181,7 +183,7 @@ export function renderDependencyInstall(options: PrintDepsOptions): string {
     } else {
       throw new Error(`Unsupported Linux dependency manager: ${manager}`);
     }
-    lines.push("", "# Linux package managers vary. Ensure `node --version` is >= 20 before using npm/npx mode.");
+    lines.push("", "# Linux package managers vary. Ensure `node --version` is >= 22.13 before using npm/npx mode.");
   }
 
   if (options.includePackageInstall) {

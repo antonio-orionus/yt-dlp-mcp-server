@@ -6,12 +6,12 @@
 
 [![npm version](https://img.shields.io/npm/v/yt-dlp-mcp-server.svg)](https://www.npmjs.com/package/yt-dlp-mcp-server)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20-brightgreen)](https://nodejs.org/)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.13-brightgreen)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
 
 28 typed tools. YouTube/youtu.be aware. Plan before write. Safe execution. Full yt-dlp option truth.
 
-> **MCP server pre-release:** v0.1.1 is ready for early users, but pin versions in production while the public release process stabilizes.
+> **MCP server pre-release:** v0.2.0 is ready for early users, but pin versions in production while the public release process stabilizes.
 
 [Quick Start](#quick-start) • [Tools](#tools) • [Usage Examples](#usage-examples) • [Safety Model](#safety-model) • [Docker](#docker)
 
@@ -44,7 +44,7 @@ Most yt-dlp MCP servers are thin wrappers around 5–10 commands. This is a cont
 | --- | --- |
 | **Windows** | `winget install -e --id OpenJS.NodeJS.LTS`<br>`winget install -e --id yt-dlp.yt-dlp` |
 | **macOS** | `brew install node yt-dlp ffmpeg` |
-| **Ubuntu/Debian** | `sudo apt install -y nodejs ffmpeg pipx && pipx install yt-dlp` |
+| **Ubuntu/Debian** | Install Node.js >=22.13 from NodeSource or nodejs.org<br>`sudo apt install -y ffmpeg pipx && pipx install yt-dlp` |
 
 > **Windows:** `yt-dlp.yt-dlp` installs Deno and `yt-dlp.FFmpeg` as winget dependencies. Restart PowerShell after install so the new command aliases are on `PATH`.
 

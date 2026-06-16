@@ -1,4 +1,4 @@
 allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
-  - yt-dlp-bridge@0.1.0
+  - yt-dlp-bridge@0.2.0

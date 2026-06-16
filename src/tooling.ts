@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
-import { GenericOutputSchema, toStructuredError } from "yt-dlp-bridge";
+import { toStructuredError } from "yt-dlp-bridge/errors";
+import { GenericOutputSchema } from "yt-dlp-bridge/schemas";
 import { z } from "zod";
 
 export type ToolAnnotations = {

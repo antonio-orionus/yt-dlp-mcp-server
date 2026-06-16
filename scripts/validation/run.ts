@@ -4,9 +4,7 @@ import path from "node:path";
 import { repoRoot } from "./common.js";
 
 export const paths = {
-  repoRoot,
-  bridgeRoot: path.resolve(repoRoot, "../y/yt-dlp-bridge"),
-  errorsRoot: path.resolve(repoRoot, "../y/ytdlp-errors")
+  repoRoot
 };
 
 export function command(name: string): string {

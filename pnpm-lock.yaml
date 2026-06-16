@@ -12,8 +12,8 @@ importers:
         specifier: ^1.29.0
         version: 1.29.0(zod@4.4.3)
       yt-dlp-bridge:
-        specifier: ^0.1.0
-        version: 0.1.0
+        specifier: ^0.2.0
+        version: 0.2.0
       zod:
         specifier: ^4.1.8
         version: 4.4.3
@@ -998,12 +998,12 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
-  yt-dlp-bridge@0.1.0:
-    resolution: {integrity: sha512-8hjLqy71+90xZhFhBHdbsQZbDwb/D4894GoKKP4kZz3zSNJStJqA+5C5QcIrcDh/qX5zmNrOBKW6k/XKElR/AA==}
-    engines: {node: '>=20'}
+  yt-dlp-bridge@0.2.0:
+    resolution: {integrity: sha512-Ds+W1Jg6ANOez1UlUcZkg6oLdaLPXWFleY93qq4BOahfGU8X3H1xZpybkf175/XhicmeIDrfys8M2ErRP1fSMw==}
+    engines: {node: '>=22.13'}
 
-  ytdlp-errors@1.1.0:
-    resolution: {integrity: sha512-UD6sCpSe9S0d4nolMes8EG+KaogvUdhtZmybGR5rbt+mHUa2gF018jt8pw3o08gb+uyhVLwSnFgl7YHA/qr1Bg==}
+  ytdlp-errors@1.1.4:
+    resolution: {integrity: sha512-v98qyD5J8azu6YU2vfa0DkWybwsPwwoFjy8uOTQpdZANwEMnRIgv8pCYL9Da77TaJ52wwndZtpwenx13ib6SmQ==}
     engines: {node: '>=18'}
 
   zod-to-json-schema@3.25.2:
@@ -1839,12 +1839,12 @@ snapshots:
 
   wrappy@1.0.2: {}
 
-  yt-dlp-bridge@0.1.0:
+  yt-dlp-bridge@0.2.0:
     dependencies:
-      ytdlp-errors: 1.1.0
+      ytdlp-errors: 1.1.4
       zod: 4.4.3
 
-  ytdlp-errors@1.1.0: {}
+  ytdlp-errors@1.1.4: {}
 
   zod-to-json-schema@3.25.2(zod@4.4.3):
     dependencies:

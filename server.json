@@ -3,19 +3,19 @@
   "name": "io.github.antonio-orionus/yt-dlp",
   "title": "yt-dlp",
   "description": "Dependency-aware local stdio MCP server that lets LLM agents inspect, plan, download, and postprocess media URLs with yt-dlp, including YouTube and youtu.be links.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "packages": [
     {
       "registryType": "npm",
       "identifier": "yt-dlp-mcp-server",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "transport": {
         "type": "stdio"
       }
     },
     {
       "registryType": "oci",
-      "identifier": "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.1.1",
+      "identifier": "ghcr.io/antonio-orionus/yt-dlp-mcp-server:0.2.0",
       "transport": {
         "type": "stdio"
       }

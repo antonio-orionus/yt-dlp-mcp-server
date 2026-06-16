@@ -28,18 +28,6 @@ jobs:
         with:
           path: yt-dlp-mcp-server
 
-      - name: Checkout bridge
-        uses: actions/checkout@v6
-        with:
-          repository: antonio-orionus/yt-dlp-bridge
-          path: y/yt-dlp-bridge
-
-      - name: Checkout ytdlp-errors
-        uses: actions/checkout@v6
-        with:
-          repository: antonio-orionus/yt-dlp-errors
-          path: y/ytdlp-errors
-
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
@@ -47,18 +35,10 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.12"
-
       - name: Setup pnpm
         run: |
           corepack enable
           corepack prepare pnpm@10.34.1 --activate
-
-      - name: Install pinned yt-dlp for bridge drift check
-        run: python -m pip install "yt-dlp==2026.03.17"
 
       - name: Install
         working-directory: yt-dlp-mcp-server

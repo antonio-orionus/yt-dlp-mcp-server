@@ -1,35 +1,27 @@
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 import { readdir, stat } from "node:fs/promises";
 import { join } from "node:path";
-import {
-  CONFIG,
-  DownloadInputSchema,
-  ensureDirectory,
-  ensureWithinRoot,
-  findOptionByFlag,
-  optionMetadata,
-  parseFinalPaths,
-  parseProgress,
-  planDownload,
-  readArchive,
-  redactArgs,
-  runCommand,
-  ytdlpCommand
-} from "yt-dlp-bridge";
+import { planWorkflow, type WorkflowPlan } from "yt-dlp-bridge";
+import { CONFIG } from "yt-dlp-bridge/config";
+import { ensureDirectory, ensureWithinRoot, readArchive } from "yt-dlp-bridge/filesystem";
+import { findOptionByFlag, optionMetadata } from "yt-dlp-bridge/option-catalog";
+import { parseFinalPaths, parseProgress } from "yt-dlp-bridge/parsers";
+import { redactArgs } from "yt-dlp-bridge/redaction";
+import { runCommand } from "yt-dlp-bridge/runner";
+import { WorkflowExecutionInputSchema } from "yt-dlp-bridge/schemas";
 import { z } from "zod";
 import { ok } from "./tooling.js";
 
-export async function executeDownload(input: z.infer<typeof DownloadInputSchema>): Promise<CallToolResult> {
-  const plan = await planDownload(input, CONFIG);
+export async function executeDownload(input: z.infer<typeof WorkflowExecutionInputSchema>): Promise<CallToolResult> {
+  const plan = planWorkflow(input, { config: CONFIG, configFiles: { mode: "disabled" } });
   if (input.dryRun) return ok({ dryRun: true, plan });
 
-  await ensureDirectory(plan.outputRoot);
-  await ensureDirectory(plan.tempRoot);
+  await ensurePlanOutputDirectories(plan);
   const startedAt = Date.now();
-  const result = await runYtdlp(plan.argv);
+  const result = await runYtdlp(plan.args);
   const finalPaths = parseFinalPaths(result.stdout);
   if (finalPaths.paths.length === 0) {
-    finalPaths.paths = await listRecentlyWrittenFiles(plan.outputRoot, startedAt, plan.outputTemplate);
+    finalPaths.paths = await listRecentlyWrittenFiles(planOutputRoot(plan), startedAt, planOutputTemplate(plan));
   }
   return ok({
     plan,
@@ -50,8 +42,7 @@ export async function runReadOnly(args: string[]): Promise<CallToolResult> {
 }
 
 export async function runYtdlp(args: string[]) {
-  const command = ytdlpCommand(args, CONFIG);
-  return runCommand(command.command, command.args, {
+  return runCommand(CONFIG.ytdlpPath, args, {
     timeoutMs: CONFIG.defaultTimeoutMs,
     maxOutputBytes: CONFIG.maxOutputBytes
   });
@@ -77,6 +68,24 @@ export function validateExpertArgs(args: string[]): { valid: boolean; blocked: s
 export function readArchiveSafe(archivePath: string): string[] {
   if (!CONFIG.allowArbitraryOutputPaths) ensureWithinRoot(CONFIG.outputRoot, archivePath, "archivePath");
   return readArchive(archivePath);
+}
+
+function planOutputRoot(plan: WorkflowPlan): string {
+  const root = plan.facts.output?.outputRoot;
+  if (!root) throw new Error("Workflow plan does not include a managed output root");
+  return root;
+}
+
+function planOutputTemplate(plan: WorkflowPlan): string {
+  const template = plan.facts.output?.template;
+  if (!template) throw new Error("Workflow plan does not include an output template");
+  return template;
+}
+
+async function ensurePlanOutputDirectories(plan: WorkflowPlan): Promise<void> {
+  await ensureDirectory(planOutputRoot(plan));
+  const tempRoot = plan.facts.output?.tempRoot;
+  if (tempRoot) await ensureDirectory(tempRoot);
 }
 
 async function listRecentlyWrittenFiles(root: string, sinceMs: number, outputTemplate: string): Promise<string[]> {

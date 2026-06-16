@@ -1,5 +1,7 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { CONFIG, UPSTREAM_OPTION_CATALOG, checkEnvironment } from "yt-dlp-bridge";
+import { CONFIG } from "yt-dlp-bridge/config";
+import { checkEnvironment } from "yt-dlp-bridge/environment";
+import { UPSTREAM_OPTION_CATALOG } from "yt-dlp-bridge/option-catalog";
 
 const TOOL_GROUPS = {
   environment: ["ytdlp_check_environment", "ytdlp_list_extractors", "ytdlp_list_impersonation_targets"],

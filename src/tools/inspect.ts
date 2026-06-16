@@ -1,20 +1,9 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import {
-  AuthOptionsSchema,
-  CONFIG,
-  InspectInputSchema,
-  NetworkOptionsSchema,
-  buildListArgs,
-  buildMetadataArgs,
-  buildSingleJsonArgs,
-  paginate,
-  parseFormats,
-  parseJsonLines,
-  parseSubtitles,
-  parseThumbnails,
-  sanitizeMetadataItems
-} from "yt-dlp-bridge";
+import { planWorkflow } from "yt-dlp-bridge";
+import { CONFIG } from "yt-dlp-bridge/config";
+import { paginate, parseFormats, parseJsonLines, parseSubtitles, parseThumbnails, sanitizeMetadataItems } from "yt-dlp-bridge/parsers";
+import { AuthOptionsSchema, InspectInputSchema, NetworkOptionsSchema } from "yt-dlp-bridge/schemas";
 import { FormatListOutputSchema, MetadataOutputSchema, ProbeOutputSchema, SearchOutputSchema, SubtitleListOutputSchema, ThumbnailListOutputSchema } from "../output-schemas.js";
 import { runYtdlp } from "../runtime.js";
 import { ok, registerTool } from "../tooling.js";
@@ -53,7 +42,7 @@ export function registerInspectTools(server: McpServer): void {
     "Extract structured metadata for a media URL without downloading files using yt-dlp --dump-json. Use to inspect title, duration, uploader, formats, subtitles, thumbnails, and selected best format.",
     InspectInputSchema,
     async (input) => {
-      const result = await runYtdlp(buildMetadataArgs(input));
+      const result = await runYtdlp(planWorkflow({ ...input, kind: "inspect", inspect: "metadata" }, { config: CONFIG, configFiles: { mode: "disabled" } }).args);
       const parsed = parseJsonLines(result.stdout);
       const items = sanitizeMetadataItems(parsed.items);
       return ok({ items: paginate(items, input.offset, input.limit), parseErrors: parsed.parseErrors, rawBytes: result.stdout.length });
@@ -68,7 +57,7 @@ export function registerInspectTools(server: McpServer): void {
     "List available audio/video formats for a media URL without downloading files. Use when the user asks what quality, codec, resolution, bitrate, or format IDs are available.",
     InspectInputSchema,
     async (input) => {
-      const result = await runYtdlp(buildListArgs("formats", input));
+      const result = await runYtdlp(planWorkflow({ ...input, kind: "inspect", inspect: "formats" }, { config: CONFIG, configFiles: { mode: "disabled" } }).args);
       const items = parseFormats(result.stdout);
       return ok({ items: paginate(items, input.offset, input.limit), rawBytes: result.stdout.length });
     },
@@ -82,7 +71,7 @@ export function registerInspectTools(server: McpServer): void {
     "List available manual subtitles and automatic captions for a media URL without downloading files. Use when the user asks which subtitle languages or formats exist.",
     InspectInputSchema,
     async (input) => {
-      const result = await runYtdlp(buildListArgs("subtitles", input));
+      const result = await runYtdlp(planWorkflow({ ...input, kind: "inspect", inspect: "subtitles" }, { config: CONFIG, configFiles: { mode: "disabled" } }).args);
       const items = parseSubtitles(result.stdout);
       return ok({ items: paginate(items, input.offset, input.limit), rawBytes: result.stdout.length });
     },
@@ -96,7 +85,7 @@ export function registerInspectTools(server: McpServer): void {
     "List available thumbnails for a media URL without downloading files. Use when the user asks for cover images, thumbnail URLs, resolutions, or poster options.",
     InspectInputSchema,
     async (input) => {
-      const result = await runYtdlp(buildListArgs("thumbnails", input));
+      const result = await runYtdlp(planWorkflow({ ...input, kind: "inspect", inspect: "thumbnails" }, { config: CONFIG, configFiles: { mode: "disabled" } }).args);
       const items = parseThumbnails(result.stdout);
       return ok({ items: paginate(items, input.offset, input.limit), rawBytes: result.stdout.length });
     },
@@ -110,7 +99,7 @@ export function registerInspectTools(server: McpServer): void {
     "Probe whether yt-dlp supports a media URL and identify the extractor without downloading files. Use for quick support checks before planning or downloading.",
     InspectInputSchema,
     async (input) => {
-      const result = await runYtdlp(buildSingleJsonArgs(input));
+      const result = await runYtdlp(planWorkflow({ ...input, kind: "inspect", inspect: "single-json" }, { config: CONFIG, configFiles: { mode: "disabled" } }).args);
       const parsed = parseJsonLines(result.stdout);
       const items = sanitizeMetadataItems(parsed.items);
       return ok({ supported: true, items: paginate(items, input.offset, input.limit), parseErrors: parsed.parseErrors, rawBytes: result.stdout.length });

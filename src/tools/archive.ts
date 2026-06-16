@@ -1,5 +1,5 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { ArchivePathInputSchema } from "yt-dlp-bridge";
+import { ArchivePathInputSchema } from "yt-dlp-bridge/schemas";
 import { ArchiveCheckOutputSchema, ArchiveInspectOutputSchema, ArchiveUpdateOutputSchema } from "../output-schemas.js";
 import { readArchiveSafe } from "../runtime.js";
 import { ok, registerTool } from "../tooling.js";
