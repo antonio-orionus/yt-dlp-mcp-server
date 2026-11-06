@@ -11,7 +11,8 @@
 
 28 typed tools. YouTube/youtu.be aware. Plan before write. Safe execution. Full yt-dlp option truth.
 
-> **MCP server pre-release:** v0.2.0 is ready for early users, but pin versions in production while the public release process stabilizes.
+> [!WARNING]
+> **Deprecated and no longer maintained.** This repository is archived and the npm package is deprecated. v0.2.0 is the final release: it gets no bug fixes or security updates, and its dependencies have known vulnerabilities. Don't use it in new projects.
 
 [Quick Start](#quick-start) • [Tools](#tools) • [Usage Examples](#usage-examples) • [Safety Model](#safety-model) • [Docker](#docker)
 
