@@ -1,5 +1,8 @@
 # yt-dlp-mcp-server
 
+> [!WARNING]
+> **Deprecated and no longer maintained.** This repository is archived and the npm package is deprecated. v0.2.0 is the final release: it gets no bug fixes or security updates, and its dependencies have known vulnerabilities. Don't use it in new projects.
+
 <div align="center">
 
 **The production-grade MCP server for yt-dlp — inspect, plan, download, postprocess media URLs for AI agents**
@@ -10,9 +13,6 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
 
 28 typed tools. YouTube/youtu.be aware. Plan before write. Safe execution. Full yt-dlp option truth.
-
-> [!WARNING]
-> **Deprecated and no longer maintained.** This repository is archived and the npm package is deprecated. v0.2.0 is the final release: it gets no bug fixes or security updates, and its dependencies have known vulnerabilities. Don't use it in new projects.
 
 [Quick Start](#quick-start) • [Tools](#tools) • [Usage Examples](#usage-examples) • [Safety Model](#safety-model) • [Docker](#docker)
 
